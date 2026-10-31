@@ -191,6 +191,23 @@ html.dark-theme ion-select {
   --placeholder-color: var(--app-muted);
 }
 
+html.dark-theme .login-card form ion-input,
+html.dark-theme .editor-form ion-input {
+  --background: #101914;
+  --color: var(--app-ink);
+  --border-color: var(--app-border);
+  --placeholder-color: var(--app-muted);
+  --highlight-color-focused: #b9d8c2;
+}
+
+html.dark-theme .eyebrow {
+  color: #b9d8c2;
+}
+
+html.dark-theme .login-card .password-toggle {
+  --color: var(--app-muted);
+}
+
 html.dark-theme .today-chip {
   color: var(--app-ink);
 }

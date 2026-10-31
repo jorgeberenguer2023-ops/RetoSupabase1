@@ -197,6 +197,7 @@ html.dark-theme .editor-form ion-input {
   --color: var(--app-ink);
   --border-color: var(--app-border);
   --placeholder-color: var(--app-muted);
+  --placeholder-opacity: 1;
   --highlight-color-focused: #b9d8c2;
 }
 
@@ -204,8 +205,25 @@ html.dark-theme .eyebrow {
   color: #b9d8c2;
 }
 
+html.dark-theme .login-panel .login-theme-toggle ion-button {
+  --color: #b9d8c2;
+}
+
 html.dark-theme .login-card .password-toggle {
   --color: var(--app-muted);
+}
+
+html.dark-theme .login-card .security-note {
+  border-color: var(--app-border);
+  color: #b9d8c2;
+}
+
+html.dark-theme .login-card .security-note strong {
+  color: var(--app-ink);
+}
+
+html.dark-theme .login-card .security-note small {
+  color: var(--app-muted);
 }
 
 html.dark-theme .today-chip {

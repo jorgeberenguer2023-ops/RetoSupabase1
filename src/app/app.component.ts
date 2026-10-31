@@ -26,11 +26,13 @@ import {
   lockClosedOutline,
   logOutOutline,
   mailOutline,
+  moonOutline,
   peopleOutline,
   searchOutline,
   shieldCheckmarkOutline,
   trashOutline,
   walletOutline,
+  sunnyOutline,
 } from 'ionicons/icons';
 
 @Component({
@@ -64,11 +66,13 @@ export class AppComponent {
       lockClosedOutline,
       logOutOutline,
       mailOutline,
+      moonOutline,
       peopleOutline,
       searchOutline,
       shieldCheckmarkOutline,
       trashOutline,
       walletOutline,
+      sunnyOutline,
     });
   }
 }

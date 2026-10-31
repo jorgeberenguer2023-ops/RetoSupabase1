@@ -23,6 +23,7 @@ import { Community } from '../models/record.model';
 import { CommunitiesService } from '../services/communities.service';
 import { ReportService } from '../services/report.service';
 import { SupabaseService } from '../services/supabase.service';
+import { ThemeService } from '../services/theme.service';
 import { RecordTableComponent } from '../components/record-table/record-table.component';
 import { StatCardComponent } from '../components/stat-card/stat-card.component';
 
@@ -51,6 +52,7 @@ export class HomePage implements AfterViewInit, OnDestroy {
   readonly communitiesService = inject(CommunitiesService);
   readonly auth = inject(SupabaseService);
   readonly reports = inject(ReportService);
+  readonly theme = inject(ThemeService);
   readonly error = signal('');
   readonly currentDate = new Date();
   private chart?: Chart;
@@ -58,6 +60,7 @@ export class HomePage implements AfterViewInit, OnDestroy {
   constructor() {
     effect(() => {
       this.communitiesService.communities();
+      this.theme.dark();
       if (this.chartCanvas) {
         this.renderChart();
       }
@@ -132,6 +135,8 @@ export class HomePage implements AfterViewInit, OnDestroy {
       return;
     }
     this.chart?.destroy();
+    const tickColor = this.theme.dark() ? '#aab8ae' : '#526477';
+    const gridColor = this.theme.dark() ? '#2b3a32' : '#e5e9e3';
     const config: ChartConfiguration<'bar'> = {
       type: 'bar',
       data: {
@@ -151,8 +156,12 @@ export class HomePage implements AfterViewInit, OnDestroy {
         maintainAspectRatio: false,
         plugins: { legend: { display: false } },
         scales: {
-          x: { grid: { display: false }, ticks: { color: '#526477' } },
-          y: { beginAtZero: true, ticks: { precision: 0, color: '#526477' } },
+          x: { grid: { display: false }, ticks: { color: tickColor } },
+          y: {
+            beginAtZero: true,
+            grid: { color: gridColor },
+            ticks: { precision: 0, color: tickColor },
+          },
         },
       },
     };

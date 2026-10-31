@@ -10,7 +10,7 @@ La tabla que ya existía en el proyecto debe contener estos campos: `id`, `creat
 
 ### Preparar los permisos y la autenticación
 
-1. Abre el SQL Editor del proyecto Supabase y ejecuta `supabase/migrations/20261027000000_initial_schema.sql`. La migración crea perfiles, activa RLS sobre `comunidad`, permite lectura autenticada y reserva las escrituras a administradores; también habilita Realtime para esa tabla.
+1. Abre el SQL Editor del proyecto Supabase y ejecuta, en orden, `supabase/migrations/20261027000000_initial_schema.sql`, `supabase/migrations/20261030000000_community_users.sql` y `supabase/migrations/20261031000001_admin_community_writes.sql`. Estas migraciones crean perfiles, limitan las lecturas por comunidad y permiten insertar, actualizar y borrar comunidades solo a administradores. La migración inicial también habilita Realtime.
 2. Desde Authentication, crea las cuentas de prueba. Un trigger genera el perfil como usuario estándar.
 3. Promociona al administrador desde el SQL Editor:
 
@@ -22,7 +22,7 @@ La tabla que ya existía en el proyecto debe contener estos campos: `id`, `creat
    );
    ```
 
-4. Comprueba en **Table Editor → comunidad → RLS policies** que no haya políticas antiguas que concedan acceso anónimo o escritura más amplia que las políticas de la migración.
+4. Ejecuta también `supabase/migrations/20261030010000_community_portal_photos.sql` para configurar el bucket privado de imágenes. Comprueba en **Table Editor → comunidad → RLS policies** que los usuarios estándar solo leen su comunidad y que las escrituras están reservadas a administradores.
 5. Ejecuta `npm ci`, `npm start` y abre la URL indicada por Angular CLI.
 
 Las rutas muestran un formulario de inicio de sesión. El dashboard requiere rol de administrador; el rol estándar puede consultar las comunidades. Las escrituras se validan también en RLS, no solo en el navegador.

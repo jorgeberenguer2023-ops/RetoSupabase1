@@ -1,7 +1,9 @@
 # Configuración de accesos por comunidad
 
 ## 1. Base de datos
-Ejecuta `setup.sql` en el SQL Editor de Supabase. Si ya ejecutaste la migración inicial, ejecuta solo `migrations/20261030000000_community_users.sql`.
+En una instalación nueva, ejecuta las migraciones en orden: `20261027000000_initial_schema.sql`, `20261030000000_community_users.sql`, `20261030010000_community_portal_photos.sql` y `20261031000001_admin_community_writes.sql`. Si las migraciones iniciales ya están instaladas, aplica la nueva migración de permisos de escritura al final.
+
+La migración `20261031000001_admin_community_writes.sql` restablece las políticas RLS de lectura por rol y las políticas de escritura exclusivas de administradores. También concede a `authenticated` los permisos de tabla y, cuando existe, el uso de la secuencia del ID para insertar registros.
 
 ## 2. Edge Function
 La función `functions/create-community-user/index.ts` crea/invita el usuario de Supabase asociado al correo de cada comunidad y vincula su `community_id`.

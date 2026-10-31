@@ -47,6 +47,10 @@ create policy "Authenticated users can read communities"
   to authenticated
   using (true);
 
+drop policy if exists "Admins can insert communities" on public.comunidad;
+drop policy if exists "Admins can update communities" on public.comunidad;
+drop policy if exists "Admins can delete communities" on public.comunidad;
+
 create policy "Admins can insert communities"
   on public.comunidad
   for insert
@@ -69,6 +73,20 @@ create policy "Admins can delete communities"
 grant select on public.profiles to authenticated;
 grant update on public.profiles to authenticated;
 grant select, insert, update, delete on public.comunidad to authenticated;
+
+do $$
+declare
+  comunidad_id_sequence text;
+begin
+  comunidad_id_sequence := pg_get_serial_sequence('public.comunidad', 'id');
+  if comunidad_id_sequence is not null then
+    execute format(
+      'grant usage, select on sequence %s to authenticated',
+      comunidad_id_sequence
+    );
+  end if;
+end;
+$$;
 
 create or replace function public.handle_new_user()
 returns trigger

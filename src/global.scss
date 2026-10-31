@@ -43,6 +43,31 @@
   --app-sage: #dce8c8;
 }
 
+html.dark-theme {
+  color-scheme: dark;
+  --app-ink: #e7eee8;
+  --app-muted: #aab8ae;
+  --app-border: #2b3a32;
+  --app-background: #101914;
+  --app-surface: #18251e;
+  --app-forest: #0c1711;
+  --app-sage: #344735;
+  --ion-background-color: var(--app-background);
+  --ion-text-color: var(--app-ink);
+  --ion-item-background: var(--app-surface);
+  --ion-toolbar-background: var(--app-surface);
+  --ion-toolbar-color: var(--app-ink);
+  --ion-card-background: var(--app-surface);
+  --ion-border-color: var(--app-border);
+  --ion-color-step-50: #151f19;
+  --ion-color-step-100: #1b2821;
+  --ion-color-step-150: #222f28;
+  --ion-color-step-200: #293a31;
+  --ion-color-step-600: #9baa9f;
+  --ion-color-step-700: #b7c3bb;
+  background: var(--app-background);
+}
+
 html,
 body,
 ion-app {
@@ -54,6 +79,154 @@ body {
   background: var(--app-background);
   font-family:
     Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+html.dark-theme body,
+html.dark-theme ion-app,
+html.dark-theme .app-main,
+html.dark-theme ion-router-outlet {
+  color: var(--app-ink);
+  background: var(--app-background);
+}
+
+html.dark-theme ion-content,
+html.dark-theme .login-content,
+html.dark-theme .page-content,
+html.dark-theme .editor-content {
+  --background: var(--app-background);
+  --color: var(--app-ink);
+}
+
+html.dark-theme .app-header,
+html.dark-theme .app-header ion-toolbar,
+html.dark-theme ion-toolbar {
+  border-color: var(--app-border);
+  background: var(--app-surface);
+  --background: var(--app-surface);
+  --color: var(--app-ink);
+}
+
+html.dark-theme .login-panel {
+  background:
+    radial-gradient(ellipse at 85% 12%, rgb(91 116 84 / 20%), transparent 34%),
+    var(--app-background);
+  color: var(--app-ink);
+}
+
+html.dark-theme .login-card,
+html.dark-theme .directory-card,
+html.dark-theme .panel-card,
+html.dark-theme .stat-card,
+html.dark-theme .table-card,
+html.dark-theme .info-card,
+html.dark-theme .photo-editor,
+html.dark-theme .today-chip {
+  border-color: var(--app-border);
+  background: var(--app-surface);
+  color: var(--app-ink);
+  box-shadow: 0 10px 30px rgb(0 0 0 / 18%);
+}
+
+html.dark-theme .page-heading h1,
+html.dark-theme .directory-heading h2,
+html.dark-theme .section-heading h2,
+html.dark-theme .login-card h2,
+html.dark-theme .info-card strong,
+html.dark-theme .empty-community h2,
+html.dark-theme .detail-card strong,
+html.dark-theme .records-count strong {
+  color: var(--app-ink);
+}
+
+html.dark-theme .page-heading p:not(.eyebrow),
+html.dark-theme .directory-heading p,
+html.dark-theme .section-heading p,
+html.dark-theme .stat-card__top,
+html.dark-theme .stat-card small,
+html.dark-theme .panel-description,
+html.dark-theme .login-help,
+html.dark-theme .info-card p,
+html.dark-theme .empty-community p,
+html.dark-theme .info-label {
+  color: var(--app-muted);
+}
+
+html.dark-theme .login-theme-toggle ion-button,
+html.dark-theme .app-header ion-button,
+html.dark-theme .app-header ion-menu-button {
+  --color: var(--app-muted);
+}
+
+html.dark-theme .welcome-mark,
+html.dark-theme .info-icon,
+html.dark-theme .detail-icon,
+html.dark-theme .stat-card__top ion-icon {
+  border-color: var(--app-border);
+  background: #294034;
+  color: #c3d6b7;
+}
+
+html.dark-theme .table-card table,
+html.dark-theme .table-card tbody,
+html.dark-theme .table-card td,
+html.dark-theme .table-card th {
+  border-color: var(--app-border);
+  background: var(--app-surface);
+  color: var(--app-ink);
+}
+
+html.dark-theme .table-card thead th {
+  background: #202e26;
+  color: var(--app-muted);
+}
+
+html.dark-theme .search-input,
+html.dark-theme .status-select,
+html.dark-theme form ion-input,
+html.dark-theme ion-input,
+html.dark-theme ion-select {
+  --background: var(--app-surface);
+  --color: var(--app-ink);
+  --border-color: var(--app-border);
+  --placeholder-color: var(--app-muted);
+}
+
+html.dark-theme .today-chip {
+  color: var(--app-ink);
+}
+
+html.dark-theme .sync-status:not(.sync-status--offline),
+html.dark-theme .meeting-chip {
+  border-color: #355340;
+  background: #203529;
+  color: #c4d6c6;
+}
+
+html.dark-theme .notice--error {
+  border-color: #61332e;
+  background: #2a1917;
+  color: #f0bdb7;
+}
+
+html.dark-theme .notice--warning {
+  border-color: #66562a;
+  background: #292518;
+  color: #e5d59a;
+}
+
+html.dark-theme .privacy-card {
+  border-color: #2c4436;
+  background: #17251e;
+  color: #c7d8cd;
+}
+
+html.dark-theme .empty-community {
+  border-color: #33463b;
+}
+
+html.dark-theme ion-modal {
+  --background: var(--app-surface);
+  --color: var(--app-ink);
 }
 
 :focus-visible {
@@ -68,33 +241,3 @@ ion-select:focus-within {
   outline: 3px solid #176a9b;
   outline-offset: 3px;
 }
-
-/* Tema oscuro de Nexo */
-html.dark-theme {
-  --ion-background-color: #101714;
-  --ion-text-color: #e9efe9;
-  --ion-color-step-50: #151d19;
-  --ion-color-step-100: #1b2420;
-  --ion-color-step-150: #222d28;
-  --ion-color-step-200: #29352f;
-  --ion-color-step-600: #aebdb4;
-  --ion-color-step-700: #c6d1ca;
-  background:#101714;
-}
-html.dark-theme body { background:#101714; color:#e9efe9; }
-html.dark-theme ion-content { --background:#101714; --color:#e9efe9; }
-html.dark-theme ion-toolbar { --background:#151d19; --color:#e9efe9; }
-html.dark-theme ion-item, html.dark-theme ion-list { --background:#151d19; --color:#e9efe9; }
-html.dark-theme .app-main, html.dark-theme ion-router-outlet { background:#101714; }
-html.dark-theme .page-heading h1, html.dark-theme .directory-heading h2,
-html.dark-theme .info-card strong, html.dark-theme .empty-community h2 { color:#e9efe9; }
-html.dark-theme .page-heading p, html.dark-theme .directory-heading p,
-html.dark-theme .info-card p, html.dark-theme .hero-subtitle { color:#aebdb4; }
-html.dark-theme .directory-card, html.dark-theme .info-card { background:#151d19; border-color:#29352f; box-shadow:0 10px 30px rgba(0,0,0,.18); }
-html.dark-theme .info-icon { background:#203027; color:#b9d8c2; }
-html.dark-theme .privacy-card { background:#17251e; border-color:#2c4436; color:#c7d8cd; }
-html.dark-theme .empty-community { border-color:#33463b; }
-html.dark-theme .notice--error { background:#2a1917; border-color:#61332e; color:#f0bdb7; }
-html.dark-theme .notice--warning { background:#292518; border-color:#66562a; color:#e5d59a; }
-html.dark-theme ion-modal { --background:#151d19; --color:#e9efe9; }
-html.dark-theme ion-input { --background:#151d19; --color:#e9efe9; --border-color:#34443b; }

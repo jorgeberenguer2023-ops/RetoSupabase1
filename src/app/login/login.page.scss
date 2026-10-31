@@ -563,8 +563,3 @@ form ion-input ion-icon[slot="start"] {
 
 .login-theme-toggle { display:flex; justify-content:flex-end; margin-bottom:.5rem; }
 .login-theme-toggle ion-button { --color:#486152; font-size:.75rem; }
-html.dark-theme .login-content { --background:#101714; }
-html.dark-theme .login-panel { background:#101714; color:#e9efe9; }
-html.dark-theme .login-card { background:#151d19; border-color:#29352f; color:#e9efe9; }
-html.dark-theme .panel-description, html.dark-theme .login-help { color:#aebdb4; }
-html.dark-theme .login-theme-toggle ion-button { --color:#c5d6cb; }

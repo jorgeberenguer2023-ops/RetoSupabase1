@@ -1,0 +1,201 @@
+<ion-header class="app-header">
+  <ion-toolbar>
+    <ion-menu-button slot="start" aria-label="Abrir menú"></ion-menu-button>
+    <ion-title>Comunidades</ion-title>
+    <ion-button slot="end" fill="clear" (click)="downloadCsv()">
+      <ion-icon slot="start" name="download-outline" aria-hidden="true"></ion-icon>
+      CSV
+    </ion-button>
+    <ion-button slot="end" fill="clear" (click)="downloadPdf()">
+      <ion-icon slot="start" name="document-text-outline" aria-hidden="true"></ion-icon>
+      PDF
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="page-content">
+  <main class="page-wrap">
+    @if (isAdmin()) {
+      <section class="page-heading" aria-labelledby="communities-title">
+        <div>
+          <p class="eyebrow">GESTIÓN DE COMUNIDADES</p>
+          <h1 id="communities-title">Directorio de comunidades</h1>
+          <p>Administra comunidades y crea automáticamente su acceso privado.</p>
+        </div>
+        <div class="heading-actions">
+          <span class="records-count"><strong>{{ communitiesService.communities().length }}</strong> comunidades</span>
+          <ion-button fill="outline" (click)="syncCommunityUsers()" [disabled]="saving()">
+            <ion-icon slot="start" name="person-add-outline"></ion-icon>
+            Sincronizar accesos
+          </ion-button>
+          <ion-button class="add-button" (click)="openNewCommunity()">
+            <ion-icon slot="start" name="add-outline"></ion-icon>
+            Nueva comunidad
+          </ion-button>
+        </div>
+      </section>
+
+      @if (error()) { <div class="notice notice--error" role="alert">{{ error() }}</div> }
+      @if (communitiesService.realtimeError()) { <div class="notice notice--warning" role="status">{{ communitiesService.realtimeError() }}</div> }
+
+      <section class="directory-card" aria-labelledby="directory-title">
+        <div class="directory-heading">
+          <div><h2 id="directory-title">Todas las comunidades</h2><p>El administrador puede gestionar todos los registros.</p></div>
+          <span class="sync-status" [class.sync-status--offline]="!communitiesService.realtimeConnected()"><span></span>{{ communitiesService.realtimeConnected() ? 'Sincronizado' : 'Sin conexión en directo' }}</span>
+        </div>
+        <app-community-table [communities]="communitiesService.communities()" [canManage]="true" (edit)="editCommunity($event)" (remove)="confirmDelete($event)" />
+      </section>
+    } @else {
+      @if (error()) { <div class="notice notice--error" role="alert">{{ error() }}</div> }
+      @if (currentCommunity(); as community) {
+        <section class="community-hero">
+          @if (community.portal_image_url) {
+            <img class="community-portal-photo" [src]="community.portal_image_url" [alt]="'Fotografía del portal de ' + community.comunidad" />
+          } @else {
+            <div class="hero-icon"><ion-icon name="business-outline"></ion-icon></div>
+          }
+          <div><p class="eyebrow">MI COMUNIDAD</p><h1>{{ community.comunidad }}</h1><p class="hero-subtitle">Tu espacio privado de información residencial</p></div>
+          <span class="status-pill" [class.status-pill--inactive]="community.cancelada"><span></span>{{ community.cancelada ? 'Cancelada' : 'Activa' }}</span>
+        </section>
+
+        <section class="community-grid" aria-label="Información de la comunidad">
+          <article class="info-card info-card--members"><div class="info-icon"><ion-icon name="people-outline"></ion-icon></div><span class="info-label">VECINOS</span><strong>{{ community.numero }}</strong><p>Personas asociadas a la comunidad</p></article>
+          <article class="info-card info-card--fee"><div class="info-icon"><ion-icon name="wallet-outline"></ion-icon></div><span class="info-label">CUOTA MENSUAL</span><strong>{{ community.coste_mensual | currency:'EUR':'symbol':'1.2-2' }}</strong><p>Importe mensual establecido</p></article>
+          <article class="info-card info-card--meeting"><div class="info-icon"><ion-icon name="calendar-outline"></ion-icon></div><span class="info-label">PRÓXIMA JUNTA</span><strong>{{ community.junta | date:'dd/MM/yyyy' }}</strong><p>Fecha de la próxima reunión</p></article>
+          <article class="info-card info-card--email"><div class="info-icon"><ion-icon name="mail-outline"></ion-icon></div><span class="info-label">CONTACTO</span><strong class="email-value">{{ community.email }}</strong><p>Correo de contacto de la comunidad</p></article>
+        </section>
+
+        <section class="privacy-card"><ion-icon name="shield-checkmark-outline"></ion-icon><div><strong>Acceso privado</strong><p>Solo puedes consultar la información de tu comunidad. Los datos de otras comunidades están protegidos automáticamente por Supabase.</p></div></section>
+      } @else {
+        <section class="empty-community"><ion-icon name="business-outline"></ion-icon><h2>No hay una comunidad asignada</h2><p>Tu cuenta todavía no está vinculada a una comunidad. Contacta con el administrador.</p></section>
+      }
+    }
+  </main>
+
+  <ion-modal
+    [isOpen]="editorOpen()"
+    (didDismiss)="closeEditor()"
+    aria-labelledby="community-editor-title"
+  >
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title id="community-editor-title">
+            {{ editingId !== null ? 'Editar comunidad' : 'Nueva comunidad' }}
+          </ion-title>
+          <ion-button slot="end" fill="clear" aria-label="Cerrar formulario" (click)="closeEditor()">
+            <ion-icon slot="icon-only" name="close-outline" aria-hidden="true"></ion-icon>
+          </ion-button>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="editor-content">
+        <form class="editor-form" #communityForm="ngForm" (ngSubmit)="save(communityForm)">
+          <ion-input
+            name="comunidad"
+            label="Nombre de la comunidad"
+            labelPlacement="stacked"
+            placeholder="Ej. Abades"
+            [(ngModel)]="draft.comunidad"
+            required
+            maxlength="120"
+          />
+          <ion-input
+            name="numero"
+            type="number"
+            label="Número de vecinos"
+            labelPlacement="stacked"
+            min="1"
+            step="1"
+            [(ngModel)]="draft.numero"
+            required
+          />
+          <ion-input
+            name="email"
+            type="email"
+            label="Correo electrónico"
+            labelPlacement="stacked"
+            placeholder="contacto@comunidad.es"
+            autocomplete="email"
+            [(ngModel)]="draft.email"
+            (ionBlur)="validateEmail()"
+            (ionInput)="emailValidationError.set('')"
+            required
+            email
+            maxlength="254"
+          />
+          @if (emailValidationError()) {
+            <p class="field-error" role="alert">{{ emailValidationError() }}</p>
+          }
+          <ion-input
+            name="costeMensual"
+            type="number"
+            label="Cuota mensual (€)"
+            labelPlacement="stacked"
+            min="0"
+            step="0.01"
+            [(ngModel)]="draft.coste_mensual"
+            required
+          />
+          <ion-input
+            name="junta"
+            type="date"
+            label="Fecha de la próxima junta"
+            labelPlacement="stacked"
+            [(ngModel)]="draft.junta"
+            required
+          />
+          @if (editingId !== null) {
+            <section class="photo-editor" aria-label="Fotografía del portal">
+              <h3>Fotografía del portal</h3>
+              @if (draft.portal_image_path) {
+                <p class="photo-current">La comunidad ya tiene una fotografía guardada.</p>
+              } @else {
+                <p class="photo-current">Todavía no hay ninguna fotografía subida.</p>
+              }
+              @if (photoPreview(); as preview) {
+                <img class="photo-preview" [src]="preview" alt="Vista previa de la fotografía seleccionada" />
+              }
+              <label class="photo-file-label">
+                <ion-icon name="image-outline" aria-hidden="true"></ion-icon>
+                Elegir fotografía (JPG, PNG o WEBP)
+                <input type="file" accept="image/jpeg,image/png,image/webp" (change)="onPhotoSelected($event)" />
+              </label>
+              @if (selectedPhoto(); as photo) {
+                <p class="photo-current">{{ photo.name }}</p>
+                <ion-button type="button" (click)="uploadSelectedPhoto()" [disabled]="saving()">
+                  {{ saving() ? 'Subiendo…' : 'Subir fotografía' }}
+                </ion-button>
+              }
+              @if (draft.portal_image_path) {
+                <ion-button type="button" fill="clear" color="danger" (click)="deletePortalPhoto()" [disabled]="saving()">Eliminar fotografía</ion-button>
+              }
+              <p class="photo-help">Tamaño máximo: 5 MB. La fotografía se guarda en Supabase Storage.</p>
+            </section>
+          } @else {
+            <p class="photo-help">Para añadir la fotografía, guarda primero la comunidad y después vuelve a editarla.</p>
+          }
+          <ion-toggle
+            name="cancelada"
+            labelPlacement="start"
+            justify="space-between"
+            [(ngModel)]="draft.cancelada"
+          >
+            Comunidad cancelada
+          </ion-toggle>
+          @if (error()) {
+            <div class="notice notice--error" role="alert">{{ error() }}</div>
+          }
+          <div class="form-actions">
+            <ion-button fill="outline" type="button" (click)="closeEditor()">Cancelar</ion-button>
+            <ion-button
+              type="submit"
+              [disabled]="communityForm.invalid || saving() || !!emailValidationError()"
+            >
+              {{ saving() ? 'Guardando…' : 'Guardar comunidad' }}
+            </ion-button>
+          </div>
+        </form>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+</ion-content>

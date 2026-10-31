@@ -1,0 +1,258 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>tabla-datos documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="./images/favicon.ico">
+	   <link rel="stylesheet" href="./styles/style.css">
+        <link rel="stylesheet" href="./styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="./" class="navbar-brand">tabla-datos documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search">
+    <button type="button"
+        class="search-input-clear"
+        aria-label="Clear search"
+        data-search-input-clear>&times;</button>
+</div>
+            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content readme">
+                   <div class="content-data">
+
+
+<h1>Nexo — gestión de comunidades</h1>
+<p>Aplicación Ionic Angular conectada al proyecto Supabase <code>qvnsbjrwrohhdfdziuiu</code>. Usa la tabla existente <code>public.comunidad</code> para consultar, buscar, editar y exportar comunidades.</p>
+<h2>Conexión con Supabase</h2>
+<p>La URL y la clave publicable del proyecto están configuradas en <code>src/environments/environment.ts</code> y <code>src/environments/environment.prod.ts</code>. La clave <code>sb_publishable</code> está diseñada para usarse en el cliente; el acceso a los datos depende de las políticas RLS de PostgreSQL. <strong>No añadas nunca una clave <code>service_role</code> o una clave secreta al frontend.</strong></p>
+<p>La tabla que ya existía en el proyecto debe contener estos campos: <code>id</code>, <code>created_at</code>, <code>comunidad</code>, <code>numero</code>, <code>email</code>, <code>coste_mensual</code>, <code>junta</code> y <code>cancelada</code>. El formulario genera registros con estos campos, mientras que PostgreSQL asigna el identificador y la fecha de creación.</p>
+<h3>Preparar los permisos y la autenticación</h3>
+<ol>
+<li><p>Abre el SQL Editor del proyecto Supabase y ejecuta <code>supabase/migrations/20261027000000_initial_schema.sql</code>. La migración crea perfiles, activa RLS sobre <code>comunidad</code>, permite lectura autenticada y reserva las escrituras a administradores; también habilita Realtime para esa tabla.</p>
+</li>
+<li><p>Desde Authentication, crea las cuentas de prueba. Un trigger genera el perfil como usuario estándar.</p>
+</li>
+<li><p>Promociona al administrador desde el SQL Editor:</p>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-sql">update public.profiles
+set role = &#39;admin&#39;
+where id = (
+  select id from auth.users where email = &#39;admin&#64;tu-dominio.example&#39;
+);</code></pre></div></li>
+<li><p>Comprueba en <strong>Table Editor → comunidad → RLS policies</strong> que no haya políticas antiguas que concedan acceso anónimo o escritura más amplia que las políticas de la migración.</p>
+</li>
+<li><p>Ejecuta <code>npm ci</code>, <code>npm start</code> y abre la URL indicada por Angular CLI.</p>
+</li>
+</ol>
+<p>Las rutas muestran un formulario de inicio de sesión. El dashboard requiere rol de administrador; el rol estándar puede consultar las comunidades. Las escrituras se validan también en RLS, no solo en el navegador.</p>
+<h2>Funcionalidades</h2>
+<ul>
+<li>Dashboard con total de comunidades, cuota mensual activa, cancelaciones y próxima junta.</li>
+<li>Búsqueda por nombre o correo y filtro de comunidades activas/canceladas.</li>
+<li>CRUD para administradores, con validación asíncrona de correo.</li>
+<li>Actualizaciones Realtime de la tabla <code>comunidad</code>.</li>
+<li>Exportación de informes CSV y PDF.</li>
+<li>Interfaz en español, diseño responsive y controles con etiquetas accesibles.</li>
+</ul>
+<h2>Desarrollo y entrega</h2>
+<ul>
+<li><code>npm run lint</code>: analiza TypeScript y plantillas.</li>
+<li><code>npm test -- --watch=false</code>: ejecuta las pruebas unitarias.</li>
+<li><code>npm run build</code>: genera la aplicación en <code>www</code>.</li>
+<li><code>npm run docs</code>: genera la documentación técnica en <code>documentation</code>.</li>
+</ul>
+<p>Vercel puede desplegar el contenido de <code>www</code> con <code>vercel.json</code> para la navegación SPA. La auditoría Lighthouse debe realizarse sobre la versión desplegada y adjuntarse como evidencia; el workflow de GitHub Actions ejecuta lint, pruebas y build.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 0;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'readme';
+            var COMPODOC_CURRENT_PAGE_URL = 'index.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var updateDarkModeSwitchOffset = function () {
+                    var content = document.querySelector('.content');
+                    var scrollbarWidth = 0;
+
+                    if (content) {
+                         scrollbarWidth = Math.max(0, content.offsetWidth - content.clientWidth);
+                    }
+
+                    document.documentElement.style.setProperty(
+                         '--content-scrollbar-width',
+                         scrollbarWidth + 'px'
+                    );
+               };
+
+               updateDarkModeSwitchOffset();
+               requestAnimationFrame(updateDarkModeSwitchOffset);
+               window.addEventListener('resize', updateDarkModeSwitchOffset);
+
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="./js/libs/custom-elements.min.js"></script>
+       <script src="./js/libs/lit-html.js"></script>
+
+       <script src="./js/menu-wc.js" defer></script>
+
+       <script src="./js/libs/bootstrap-native.js"></script>
+
+       <script src="./js/libs/es6-shim.min.js"></script>
+       <script src="./js/libs/EventDispatcher.js"></script>
+       <script src="./js/libs/promise.min.js"></script>
+
+       <script src="./js/compodoc.js"></script>
+
+       <script src="./js/tabs.js"></script>
+       <script src="./js/menu.js"></script>
+       <script src="./js/libs/clipboard.min.js"></script>
+       <script src="./js/libs/prism.js"></script>
+       <script src="./js/sourceCode.js"></script>
+          <script src="./js/search/search.js"></script>
+          <script src="./js/search/lunr.min.js"></script>
+          <script src="./js/search/search-lunr.js"></script>
+          <script src="./js/search/search_index.js"></script>
+       <script src="./js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

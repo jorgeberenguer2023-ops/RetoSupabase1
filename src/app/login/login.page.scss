@@ -1,0 +1,570 @@
+.login-content {
+  --background: #f4f6f2;
+}
+
+.login-layout {
+  display: grid;
+  min-height: 100%;
+  grid-template-columns: minmax(0, 1.04fr) minmax(27rem, 0.96fr);
+}
+
+.login-showcase {
+  position: relative;
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+  padding: clamp(2rem, 5vw, 5rem);
+  background:
+    radial-gradient(ellipse at 86% 22%, rgb(183 202 145 / 16%), transparent 28%),
+    radial-gradient(ellipse at 15% 92%, rgb(93 119 86 / 20%), transparent 38%),
+    #122a22;
+  color: #fff;
+}
+
+.login-showcase::before,
+.login-showcase::after {
+  position: absolute;
+  z-index: 0;
+  border: 1px solid rgb(226 238 218 / 8%);
+  border-radius: 50%;
+  content: "";
+  pointer-events: none;
+}
+
+.login-showcase::before {
+  top: 18%;
+  right: -15rem;
+  width: 36rem;
+  height: 36rem;
+}
+
+.login-showcase::after {
+  top: 22%;
+  right: -11rem;
+  width: 28rem;
+  height: 28rem;
+}
+
+.brand,
+.showcase-content,
+.showcase-footer {
+  position: relative;
+  z-index: 1;
+}
+
+.brand {
+  display: inline-flex;
+  width: fit-content;
+  align-items: center;
+  gap: 0.75rem;
+  color: #f5f7f3;
+  font-size: 1.45rem;
+  font-weight: 750;
+  letter-spacing: -0.05em;
+  text-decoration: none;
+}
+
+.brand-mark {
+  display: grid;
+  width: 2.45rem;
+  height: 2.45rem;
+  place-items: center;
+  border: 1px solid rgb(222 235 214 / 23%);
+  border-radius: 0.8rem;
+  background: #dce8c8;
+  color: #19382b;
+  box-shadow: 0 7px 22px rgb(0 0 0 / 15%);
+}
+
+.brand-mark ion-icon {
+  font-size: 1.3rem;
+}
+
+.brand-period {
+  color: #c5d999;
+}
+
+.showcase-content {
+  width: min(100%, 37rem);
+  margin: 3rem 0 2rem;
+}
+
+.showcase-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  color: #d2dfbd;
+  font-size: 0.69rem;
+  font-weight: 750;
+  letter-spacing: 0.13em;
+}
+
+.showcase-kicker > span {
+  width: 0.48rem;
+  height: 0.48rem;
+  border-radius: 50%;
+  background: #cadca7;
+  box-shadow: 0 0 0 0.25rem rgb(202 220 167 / 12%);
+}
+
+.showcase-content h1 {
+  margin: 1.35rem 0 0.9rem;
+  color: #f7f8f3;
+  font-size: clamp(2.8rem, 5.3vw, 5rem);
+  font-weight: 650;
+  letter-spacing: -0.065em;
+  line-height: 0.99;
+}
+
+.showcase-copy {
+  max-width: 29rem;
+  margin: 0;
+  color: #c1ccc0;
+  font-size: clamp(0.98rem, 1.3vw, 1.08rem);
+  line-height: 1.75;
+}
+
+.preview-card {
+  width: min(100%, 29rem);
+  margin-top: clamp(2rem, 5vh, 3.5rem);
+  padding: 1rem 1.15rem 0.95rem;
+  border: 1px solid rgb(239 245 230 / 15%);
+  border-radius: 1rem;
+  background: linear-gradient(135deg, rgb(255 255 255 / 10%), rgb(255 255 255 / 4%));
+  box-shadow: 0 20px 55px rgb(0 0 0 / 14%);
+  backdrop-filter: blur(12px);
+}
+
+.preview-top,
+.preview-body,
+.preview-tags {
+  display: flex;
+  align-items: center;
+}
+
+.preview-top {
+  gap: 0.65rem;
+}
+
+.preview-mark,
+.preview-community-icon,
+.preview-arrow {
+  display: grid;
+  flex: 0 0 auto;
+  place-items: center;
+  border-radius: 0.65rem;
+}
+
+.preview-mark {
+  width: 2rem;
+  height: 2rem;
+  background: rgb(220 232 200 / 14%);
+  color: #dce8c8;
+}
+
+.preview-mark ion-icon {
+  font-size: 1.05rem;
+}
+
+.preview-title {
+  flex: 1;
+  color: #eff3ea;
+  font-size: 0.82rem;
+  font-weight: 650;
+}
+
+.preview-dot {
+  width: 0.48rem;
+  height: 0.48rem;
+  border-radius: 50%;
+  background: #a9d494;
+  box-shadow: 0 0 0 0.2rem rgb(169 212 148 / 12%);
+}
+
+.preview-rule {
+  height: 1px;
+  margin: 0.9rem 0;
+  background: rgb(255 255 255 / 12%);
+}
+
+.preview-body {
+  gap: 0.75rem;
+  padding: 0.2rem 0 0.8rem;
+}
+
+.preview-community-icon {
+  width: 2.6rem;
+  height: 2.6rem;
+  background: #dce8c8;
+  color: #19382b;
+}
+
+.preview-community-icon ion-icon {
+  font-size: 1.25rem;
+}
+
+.preview-copy {
+  display: grid;
+  flex: 1;
+  gap: 0.38rem;
+}
+
+.preview-label {
+  color: #b6c4b5;
+  font-size: 0.56rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+}
+
+.preview-line {
+  display: block;
+  height: 0.33rem;
+  border-radius: 999px;
+  background: rgb(255 255 255 / 34%);
+}
+
+.preview-line--long {
+  width: 57%;
+}
+
+.preview-line--short {
+  width: 36%;
+  background: rgb(255 255 255 / 18%);
+}
+
+.preview-arrow {
+  width: 1.85rem;
+  height: 1.85rem;
+  border: 1px solid rgb(255 255 255 / 14%);
+  color: #dce8c8;
+}
+
+.preview-arrow ion-icon {
+  transform: rotate(45deg);
+}
+
+.preview-tags {
+  flex-wrap: wrap;
+  gap: 0.55rem 1.1rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid rgb(255 255 255 / 12%);
+  color: #c4d0c2;
+  font-size: 0.64rem;
+}
+
+.preview-tags span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.preview-tags i {
+  width: 0.35rem;
+  height: 0.35rem;
+  border-radius: 50%;
+  background: #cadca7;
+}
+
+.showcase-footer {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: #abb9aa;
+  font-size: 0.76rem;
+}
+
+.footer-divider {
+  width: 1px;
+  height: 0.85rem;
+  background: rgb(255 255 255 / 25%);
+}
+
+.login-panel {
+  display: grid;
+  min-height: 100vh;
+  align-content: center;
+  justify-items: center;
+  padding: clamp(1.5rem, 5vw, 4rem);
+  background:
+    radial-gradient(ellipse at 85% 12%, rgb(226 233 218 / 70%), transparent 34%),
+    #f4f6f2;
+}
+
+.login-panel-inner {
+  width: min(100%, 28rem);
+}
+
+.login-topline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem;
+  margin-bottom: 1.2rem;
+}
+
+.eyebrow {
+  color: #58744d;
+  font-size: 0.68rem;
+  font-weight: 750;
+  letter-spacing: 0.12em;
+}
+
+.secure-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.38rem;
+  padding: 0.43rem 0.65rem;
+  border: 1px solid #e1e8dc;
+  border-radius: 999px;
+  background: rgb(255 255 255 / 70%);
+  color: #52714c;
+  font-size: 0.68rem;
+  font-weight: 650;
+}
+
+.secure-chip ion-icon {
+  font-size: 0.9rem;
+}
+
+.login-card {
+  padding: clamp(1.75rem, 4vw, 2.5rem);
+  border: 1px solid #e7ebe4;
+  border-radius: 1.15rem;
+  background: #fff;
+  box-shadow:
+    0 25px 65px rgb(29 48 40 / 8%),
+    0 2px 6px rgb(29 48 40 / 3%);
+}
+
+.welcome-mark {
+  display: grid;
+  width: 2.7rem;
+  height: 2.7rem;
+  margin-bottom: 1.25rem;
+  place-items: center;
+  border: 1px solid #e5ebdf;
+  border-radius: 0.85rem;
+  background: #f3f6ed;
+  color: #456b49;
+}
+
+.welcome-mark ion-icon {
+  font-size: 1.2rem;
+}
+
+.login-card h2 {
+  margin: 0.62rem 0 0.45rem;
+  color: var(--app-ink);
+  font-size: clamp(1.75rem, 3vw, 2rem);
+  font-weight: 650;
+  letter-spacing: -0.055em;
+}
+
+.panel-description {
+  margin: 0 0 1.75rem;
+  color: var(--app-muted);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+form {
+  display: grid;
+  gap: 1.05rem;
+}
+
+form ion-input {
+  --background: #fbfcfa;
+  --border-color: #e0e6dd;
+  --border-radius: 0.7rem;
+  --border-style: solid;
+  --border-width: 1px;
+  --highlight-color-focused: #456b49;
+  --padding-bottom: 0.9rem;
+  --padding-end: 0.8rem;
+  --padding-start: 0.8rem;
+  --padding-top: 0.9rem;
+  color: var(--app-ink);
+  font-size: 0.91rem;
+}
+
+form ion-input ion-icon[slot="start"] {
+  margin-inline-end: 0.6rem;
+  color: #758579;
+  font-size: 1.05rem;
+}
+
+.password-toggle {
+  --color: #758579;
+  --padding-start: 0.4rem;
+  --padding-end: 0.4rem;
+  margin: 0;
+}
+
+.password-toggle ion-icon {
+  font-size: 1.1rem;
+}
+
+.submit-button {
+  height: 3.15rem;
+  margin-top: 0.45rem;
+  --border-radius: 0.7rem;
+  --box-shadow: 0 8px 18px rgb(49 93 73 / 17%);
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+.notice {
+  margin: 0 0 1rem;
+  padding: 0.85rem 0.95rem;
+  border-radius: 0.7rem;
+  font-size: 0.82rem;
+  line-height: 1.55;
+  overflow-wrap: anywhere;
+}
+
+.notice--warning {
+  border: 1px solid #e8d9a8;
+  background: #fffae9;
+  color: #68551d;
+}
+
+.notice--error {
+  border: 1px solid #f0cbc6;
+  background: #fff5f3;
+  color: #8d3931;
+}
+
+.notice code {
+  font-size: 0.76rem;
+}
+
+.security-note {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 1.5rem 0 0;
+  padding-top: 1.2rem;
+  border-top: 1px solid #edf0eb;
+  color: #416749;
+}
+
+.security-note > ion-icon {
+  flex: 0 0 auto;
+  font-size: 1.22rem;
+}
+
+.security-note span {
+  display: grid;
+  gap: 0.18rem;
+}
+
+.security-note strong {
+  color: #405649;
+  font-size: 0.76rem;
+  font-weight: 650;
+}
+
+.security-note small {
+  color: #77847a;
+  font-size: 0.72rem;
+}
+
+.login-help {
+  margin: 1.1rem 0 0;
+  color: #78847b;
+  font-size: 0.74rem;
+  line-height: 1.5;
+  text-align: center;
+}
+
+@media (max-width: 900px) {
+  .login-layout {
+    grid-template-columns: minmax(0, 0.95fr) minmax(24rem, 1.05fr);
+  }
+
+  .login-showcase {
+    padding: 2rem;
+  }
+
+  .showcase-content h1 {
+    font-size: clamp(2.6rem, 6vw, 3.7rem);
+  }
+
+  .login-panel {
+    padding: 2rem;
+  }
+}
+
+@media (max-width: 700px) {
+  .login-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .login-showcase {
+    min-height: auto;
+    gap: 2rem;
+    padding: 1.5rem 1.4rem 1.8rem;
+  }
+
+  .showcase-content {
+    margin: 1rem 0 0;
+  }
+
+  .showcase-content h1 {
+    max-width: 30rem;
+    margin-top: 1rem;
+    font-size: clamp(2.55rem, 12vw, 3.6rem);
+  }
+
+  .showcase-copy {
+    font-size: 0.92rem;
+  }
+
+  .preview-card {
+    display: none;
+  }
+
+  .showcase-footer {
+    font-size: 0.7rem;
+  }
+
+  .login-panel {
+    min-height: auto;
+    padding: 1.4rem 1rem 2rem;
+  }
+
+  .login-panel-inner {
+    width: min(100%, 30rem);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .login-card,
+  .preview-card {
+    animation: settle-in 500ms ease-out both;
+  }
+
+  @keyframes settle-in {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+
+.login-theme-toggle { display:flex; justify-content:flex-end; margin-bottom:.5rem; }
+.login-theme-toggle ion-button { --color:#486152; font-size:.75rem; }
+html.dark-theme .login-content { --background:#101714; }
+html.dark-theme .login-panel { background:#101714; color:#e9efe9; }
+html.dark-theme .login-card { background:#151d19; border-color:#29352f; color:#e9efe9; }
+html.dark-theme .panel-description, html.dark-theme .login-help { color:#aebdb4; }
+html.dark-theme .login-theme-toggle ion-button { --color:#c5d6cb; }

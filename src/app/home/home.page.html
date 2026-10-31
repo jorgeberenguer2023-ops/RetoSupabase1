@@ -1,0 +1,107 @@
+<ion-header class="app-header">
+  <ion-toolbar>
+    <ion-menu-button slot="start" aria-label="Abrir menú"></ion-menu-button>
+    <ion-title>Resumen general</ion-title>
+    <ion-button slot="end" fill="clear" (click)="downloadCsv()">
+      <ion-icon slot="start" name="download-outline" aria-hidden="true"></ion-icon>
+      CSV
+    </ion-button>
+    <ion-button slot="end" fill="clear" (click)="downloadPdf()">
+      <ion-icon slot="start" name="document-text-outline" aria-hidden="true"></ion-icon>
+      PDF
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="page-content">
+  <main class="page-wrap">
+    <section class="page-heading" aria-labelledby="dashboard-title">
+      <div>
+        <p class="eyebrow">VISTA GENERAL</p>
+        <h1 id="dashboard-title">Buenos días, {{ auth.profile()?.full_name || 'equipo' }}</h1>
+        <p>Aquí tienes el estado de tus comunidades.</p>
+      </div>
+      <div class="heading-meta">
+        <span class="today-chip">
+          <ion-icon name="calendar-outline" aria-hidden="true"></ion-icon>
+          {{ currentDate | date: 'EEEE, d MMMM' : undefined : 'es-ES' }}
+        </span>
+        <span class="live-status" [class.live-status--offline]="!communitiesService.realtimeConnected()">
+          <span aria-hidden="true"></span>
+          {{ communitiesService.realtimeConnected() ? 'En directo' : 'Conexión en espera' }}
+        </span>
+      </div>
+    </section>
+
+    @if (error()) {
+      <div class="notice notice--error" role="alert">{{ error() }}</div>
+    }
+    @if (communitiesService.realtimeError()) {
+      <div class="notice notice--warning" role="status">{{ communitiesService.realtimeError() }}</div>
+    }
+
+    <section class="stats-section" aria-label="Indicadores de comunidades">
+      <div class="section-heading">
+        <div>
+          <h2>Tu comunidad en cifras</h2>
+          <p>Resumen financiero y operativo</p>
+        </div>
+      </div>
+      <div class="stats-grid">
+      <app-stat-card
+        label="Comunidades"
+        [value]="communities.length"
+        detail="Registros en el sistema"
+        icon="people-outline"
+      />
+      <app-stat-card
+        label="Ingresos mensuales"
+        [value]="monthlyIncome | currency: 'EUR' : 'symbol' : '1.2-2' : 'es-ES'"
+        detail="Solo comunidades activas"
+        icon="wallet-outline"
+      />
+      <app-stat-card
+        label="Activas"
+        [value]="activeCount"
+        detail="Comunidades no canceladas"
+        icon="checkmark-circle-outline"
+      />
+      <app-stat-card
+        label="Canceladas"
+        [value]="cancelledCount"
+        detail="Comunidades canceladas"
+        icon="close-circle-outline"
+      />
+      </div>
+    </section>
+
+    <section class="chart-card panel-card" aria-labelledby="chart-title">
+      <div class="section-heading">
+        <div>
+          <h2 id="chart-title">Cuotas mensuales</h2>
+          <p>Coste mensual registrado por comunidad</p>
+        </div>
+      </div>
+      <div class="chart-wrap">
+        <canvas #communityChart role="img" aria-label="Gráfico de barras con cuotas mensuales por comunidad"></canvas>
+      </div>
+    </section>
+
+    <section class="recent-section panel-card" aria-labelledby="recent-title">
+      <div class="section-heading">
+        <div>
+          <h2 id="recent-title">Próximas juntas</h2>
+          <p>Consulta de un vistazo las comunidades registradas.</p>
+        </div>
+        @if (nextMeeting) {
+          <span class="meeting-chip">
+            <ion-icon name="calendar-outline" aria-hidden="true"></ion-icon>
+            Siguiente: {{ nextMeeting.comunidad }} ·
+            {{ nextMeeting.junta | date: 'd MMM' : undefined : 'es-ES' }}
+          </span>
+        }
+      </div>
+      <app-community-table [communities]="communities.slice(0, 6)" />
+    </section>
+  </main>
+</ion-content>

@@ -1,0 +1,140 @@
+<ion-content [fullscreen]="true" class="login-content">
+  <main class="login-layout">
+    <section class="login-showcase" aria-label="Presentación de Nexo">
+      <a class="brand" routerLink="/login" aria-label="Nexo, inicio de sesión">
+        <span class="brand-mark"><ion-icon name="cube-outline" aria-hidden="true"></ion-icon></span>
+        <span>Nexo<span class="brand-period">.</span></span>
+      </a>
+
+      <div class="showcase-content">
+        <span class="showcase-kicker"><span></span> GESTIÓN RESIDENCIAL, SIMPLIFICADA</span>
+        <h1>Tu comunidad,<br />en buenas manos.</h1>
+        <p class="showcase-copy">
+          Cuotas, juntas y vecinos. Toda la información importante, organizada en un espacio seguro.
+        </p>
+
+        <div class="preview-card" aria-hidden="true">
+          <div class="preview-top">
+            <span class="preview-mark"><ion-icon name="grid-outline"></ion-icon></span>
+            <span class="preview-title">Espacio de gestión</span>
+            <span class="preview-dot"></span>
+          </div>
+          <div class="preview-rule"></div>
+          <div class="preview-body">
+            <span class="preview-community-icon"><ion-icon name="business-outline"></ion-icon></span>
+            <span class="preview-copy">
+              <span class="preview-label">COMUNIDADES</span>
+              <span class="preview-line preview-line--long"></span>
+              <span class="preview-line preview-line--short"></span>
+            </span>
+            <span class="preview-arrow"><ion-icon name="arrow-up-outline"></ion-icon></span>
+          </div>
+          <div class="preview-tags">
+            <span><i></i> Información centralizada</span>
+            <span><i></i> Acceso protegido</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="showcase-footer">
+        <span>© 2026 Nexo</span>
+        <span class="footer-divider"></span>
+        <span>Gestión más sencilla, cada día.</span>
+      </div>
+    </section>
+
+    <section class="login-panel" aria-labelledby="login-title">
+      <div class="login-panel-inner">
+        <div class="login-theme-toggle"><ion-button fill="clear" (click)="theme.toggle()"><ion-icon slot="start" [name]="theme.dark() ? 'sunny-outline' : 'moon-outline'"></ion-icon>{{ theme.dark() ? 'Modo claro' : 'Modo oscuro' }}</ion-button></div>
+        
+        <div class="login-topline">
+          <span class="eyebrow">PORTAL DE GESTIÓN</span>
+          <span class="secure-chip">
+            <ion-icon name="lock-closed-outline" aria-hidden="true"></ion-icon>
+            Acceso seguro
+          </span>
+        </div>
+
+      <div class="login-card">
+        <span class="welcome-mark"><ion-icon name="hand-right-outline" aria-hidden="true"></ion-icon></span>
+        <span class="eyebrow">QUÉ BUENO TENERTE DE VUELTA</span>
+        <h2 id="login-title">Inicia sesión</h2>
+        <p class="panel-description">Introduce tus datos para acceder a tu espacio de trabajo.</p>
+
+        @if (!auth.isConfigured) {
+          <div class="notice notice--warning" role="status">
+            Configura <code>supabaseUrl</code> y <code>supabaseKey</code> en
+            <code>src/environments/environment.ts</code> para habilitar el acceso.
+          </div>
+        }
+
+        @if (error() || auth.authError()) {
+          <div class="notice notice--error" role="alert">
+            {{ error() || auth.authError() }}
+          </div>
+        }
+
+        <form (ngSubmit)="submit()" #loginForm="ngForm">
+          <ion-input
+            name="email"
+            type="email"
+            label="Correo electrónico"
+            labelPlacement="stacked"
+            placeholder="nombre@empresa.com"
+            autocomplete="username"
+            [(ngModel)]="email"
+            required
+            email
+          >
+            <ion-icon slot="start" name="mail-outline" aria-hidden="true"></ion-icon>
+          </ion-input>
+          <ion-input
+            name="password"
+            [type]="passwordVisible() ? 'text' : 'password'"
+            label="Contraseña"
+            labelPlacement="stacked"
+            placeholder="Introduce tu contraseña"
+            autocomplete="current-password"
+            [(ngModel)]="password"
+            required
+          >
+            <ion-icon slot="start" name="lock-closed-outline" aria-hidden="true"></ion-icon>
+            <ion-button
+              slot="end"
+              fill="clear"
+              class="password-toggle"
+              type="button"
+              [attr.aria-label]="passwordVisible() ? 'Ocultar contraseña' : 'Mostrar contraseña'"
+              (click)="passwordVisible.update((visible) => !visible)"
+            >
+              <ion-icon
+                slot="icon-only"
+                [name]="passwordVisible() ? 'eye-off-outline' : 'eye-outline'"
+                aria-hidden="true"
+              ></ion-icon>
+            </ion-button>
+          </ion-input>
+          <ion-button
+            class="submit-button"
+            type="submit"
+            expand="block"
+            [disabled]="!loginForm.valid || submitting() || !auth.isConfigured"
+          >
+            @if (submitting()) {
+              <ion-spinner name="crescent" aria-label="Iniciando sesión"></ion-spinner>
+            } @else {
+              Acceder a mi cuenta
+            }
+          </ion-button>
+        </form>
+
+        <p class="security-note">
+          <ion-icon name="shield-checkmark-outline" aria-hidden="true"></ion-icon>
+          <span><strong>Tus datos están protegidos</strong><small>Acceso cifrado y privado.</small></span>
+        </p>
+      </div>
+      <p class="login-help">¿Problemas para acceder? Contacta con el administrador de tu comunidad.</p>
+      </div>
+    </section>
+  </main>
+</ion-content>

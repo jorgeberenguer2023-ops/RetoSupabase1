@@ -1,0 +1,59 @@
+.stat-card {
+  position: relative;
+  display: grid;
+  gap: 0.75rem;
+  min-height: 10rem;
+  padding: 1.25rem 1.35rem;
+  border: 1px solid var(--app-border);
+  border-radius: 1.05rem;
+  background: #fff;
+  box-shadow: 0 5px 16px rgb(29 48 40 / 3%);
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease,
+    border-color 180ms ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-2px);
+  border-color: #d3ddce;
+  box-shadow: 0 13px 28px rgb(29 48 40 / 7%);
+}
+
+.stat-card__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #64736a;
+  font-size: 0.82rem;
+  font-weight: 550;
+}
+
+.stat-card__top ion-icon {
+  display: grid;
+  width: 2.15rem;
+  height: 2.15rem;
+  padding: 0.48rem;
+  border-radius: 0.7rem;
+  background: #f0f4eb;
+  color: #43664a;
+  font-size: 1.1rem;
+}
+
+.stat-card strong {
+  color: var(--app-ink);
+  font-size: clamp(1.65rem, 2.5vw, 2rem);
+  line-height: 1.1;
+  letter-spacing: -0.045em;
+}
+
+.stat-card small {
+  color: #7a867d;
+  font-size: 0.75rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stat-card {
+    transition: none;
+  }
+}

@@ -1,0 +1,271 @@
+.app-header {
+  border-bottom: 1px solid var(--app-border);
+  background: #fff;
+}
+
+.app-header ion-toolbar {
+  --background: #fff;
+  --color: var(--app-ink);
+  --min-height: 4.5rem;
+  padding-inline: clamp(0.65rem, 2vw, 1.5rem);
+}
+
+.app-header ion-title {
+  font-size: 0.96rem;
+  font-weight: 650;
+  letter-spacing: -0.02em;
+}
+
+.app-header ion-menu-button {
+  --color: #30453a;
+}
+
+.app-header ion-button {
+  --color: #526357;
+  --border-radius: 0.65rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.page-content {
+  --background: var(--app-background);
+}
+
+.page-wrap {
+  display: grid;
+  max-width: 90rem;
+  gap: 1.6rem;
+  margin: 0 auto;
+  padding: clamp(1.2rem, 3vw, 2.5rem);
+}
+
+.page-heading,
+.section-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.1rem;
+}
+
+.page-heading {
+  padding: 0.15rem 0 0.35rem;
+}
+
+.eyebrow {
+  margin: 0 0 0.55rem;
+  color: #617b55;
+  font-size: 0.67rem;
+  font-weight: 750;
+  letter-spacing: 0.13em;
+}
+
+.page-heading h1 {
+  margin: 0 0 0.45rem;
+  color: #20342a;
+  font-size: clamp(1.65rem, 3vw, 2.25rem);
+  font-weight: 650;
+  letter-spacing: -0.055em;
+}
+
+.page-heading p:not(.eyebrow),
+.section-heading p {
+  margin: 0;
+  color: #748077;
+  font-size: 0.86rem;
+}
+
+.heading-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.today-chip,
+.live-status,
+.meeting-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  border-radius: 999px;
+  font-size: 0.73rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.today-chip {
+  padding: 0.58rem 0.8rem;
+  border: 1px solid #e4e9e1;
+  background: #fff;
+  color: #59695e;
+  text-transform: capitalize;
+}
+
+.today-chip ion-icon {
+  color: #73856e;
+  font-size: 0.95rem;
+}
+
+.live-status {
+  padding: 0.58rem 0.78rem;
+  border: 1px solid #dce8d9;
+  background: #f1f7ed;
+  color: #45684a;
+}
+
+.live-status span {
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 50%;
+  background: #57945c;
+  box-shadow: 0 0 0 0.18rem rgb(87 148 92 / 11%);
+}
+
+.live-status--offline {
+  border-color: #ebdfbd;
+  background: #fff9e8;
+  color: #7a642a;
+}
+
+.live-status--offline span {
+  background: #b28a38;
+  box-shadow: 0 0 0 0.18rem rgb(178 138 56 / 12%);
+}
+
+.stats-section {
+  display: grid;
+  gap: 0.95rem;
+}
+
+.section-heading {
+  margin-bottom: 1rem;
+}
+
+.section-heading h2 {
+  margin: 0 0 0.32rem;
+  color: #263b30;
+  font-size: 1rem;
+  font-weight: 650;
+  letter-spacing: -0.025em;
+}
+
+.section-heading p {
+  font-size: 0.78rem;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.panel-card {
+  min-width: 0;
+  padding: 1.35rem;
+  border: 1px solid var(--app-border);
+  border-radius: 1rem;
+  background: #fff;
+  box-shadow: 0 5px 16px rgb(29 48 40 / 3%);
+}
+
+.chart-card {
+  padding-bottom: 1rem;
+}
+
+.chart-wrap {
+  position: relative;
+  height: 16rem;
+}
+
+.recent-section {
+  padding-bottom: 0;
+}
+
+.recent-section .section-heading {
+  align-items: center;
+}
+
+.meeting-chip {
+  padding: 0.55rem 0.75rem;
+  border: 1px solid #e2e9db;
+  background: #f6f8f2;
+  color: #506b4e;
+}
+
+.meeting-chip ion-icon {
+  font-size: 0.95rem;
+}
+
+.notice {
+  padding: 0.85rem 1rem;
+  border-radius: 0.7rem;
+  font-size: 0.82rem;
+  line-height: 1.55;
+}
+
+.notice--error {
+  border: 1px solid #f0cbc6;
+  background: #fff5f3;
+  color: #8d3931;
+}
+
+.notice--warning {
+  border: 1px solid #e8d9a8;
+  background: #fffae9;
+  color: #68551d;
+}
+
+@media (max-width: 1050px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 700px) {
+  .page-wrap {
+    gap: 1.25rem;
+    padding: 1.15rem 1rem 1.5rem;
+  }
+
+  .page-heading {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.9rem;
+  }
+
+  .heading-meta {
+    flex-wrap: wrap;
+  }
+
+  .stats-grid {
+    gap: 0.7rem;
+  }
+
+  .panel-card {
+    padding: 1rem;
+  }
+
+  .chart-wrap {
+    height: 13rem;
+  }
+
+  .recent-section .section-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .app-header ion-button {
+    --padding-start: 0.42rem;
+    --padding-end: 0.42rem;
+    font-size: 0.72rem;
+  }
+
+  .app-header ion-button ion-icon {
+    display: none;
+  }
+}
+
+@media (max-width: 390px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+}

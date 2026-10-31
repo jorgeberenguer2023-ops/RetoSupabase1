@@ -1,0 +1,203 @@
+:host {
+  display: block;
+  height: 100%;
+}
+
+ion-split-pane {
+  --side-max-width: 17rem;
+  --side-min-width: 17rem;
+}
+
+.sidebar {
+  --background: #122a22;
+  --padding-bottom: 0;
+  --padding-top: 0;
+  color: #f5f7f3;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 1.75rem 1.5rem 3rem;
+  color: #f5f7f3;
+  font-size: 1.45rem;
+  font-weight: 750;
+  letter-spacing: -0.05em;
+  text-decoration: none;
+}
+
+.brand-mark {
+  display: grid;
+  width: 2.35rem;
+  height: 2.35rem;
+  place-items: center;
+  border: 1px solid rgb(222 235 214 / 23%);
+  border-radius: 0.8rem;
+  background: #dce8c8;
+  color: #19382b;
+  box-shadow: 0 5px 16px rgb(0 0 0 / 12%);
+}
+
+.brand-mark ion-icon {
+  font-size: 1.25rem;
+}
+
+.brand-period {
+  color: #c5d999;
+}
+
+.nav-caption {
+  margin: 0 1.5rem 0.85rem;
+  color: #aab8a9;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+}
+
+ion-list {
+  padding: 0 0.85rem;
+  background: transparent;
+}
+
+ion-item {
+  --background: transparent;
+  --background-hover: rgb(255 255 255 / 7%);
+  --color: #d8e0d5;
+  --border-radius: 0.75rem;
+  --min-height: 3.2rem;
+  margin: 0.3rem 0;
+  font-size: 0.88rem;
+}
+
+ion-item ion-icon {
+  color: #aab8a9;
+  font-size: 1.12rem;
+}
+
+ion-item.nav-active {
+  --background: rgb(220 232 200 / 13%);
+  --color: #f5f7f3;
+  font-weight: 650;
+}
+
+ion-item.nav-active ion-icon {
+  color: #d3e2b4;
+}
+
+.sidebar-bottom {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 1rem 1rem 0.85rem;
+}
+
+.workspace-note {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin: 0 0.2rem 1rem;
+  padding: 0.85rem;
+  border: 1px solid rgb(255 255 255 / 9%);
+  border-radius: 0.8rem;
+  background: rgb(255 255 255 / 4%);
+}
+
+.workspace-note ion-icon {
+  color: #c5d999;
+  font-size: 1.25rem;
+}
+
+.workspace-note span {
+  display: grid;
+  gap: 0.15rem;
+}
+
+.workspace-note strong {
+  color: #eef2e8;
+  font-size: 0.78rem;
+}
+
+.workspace-note small {
+  color: #aab8a9;
+  font-size: 0.7rem;
+}
+
+.sidebar-error {
+  margin: 0 0.3rem 0.75rem;
+  color: #ffd1ce;
+  font-size: 0.75rem;
+  line-height: 1.4;
+}
+
+.sidebar-footer {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.8rem 0.2rem 0;
+  border-top: 1px solid rgb(255 255 255 / 12%);
+}
+
+.avatar {
+  display: grid;
+  width: 2.4rem;
+  height: 2.4rem;
+  flex: 0 0 auto;
+  place-items: center;
+  border-radius: 50%;
+  background: #dce8c8;
+  color: #19382b;
+  font-weight: 700;
+}
+
+.account {
+  display: grid;
+  min-width: 0;
+  flex: 1;
+  gap: 0.2rem;
+  color: #f5f7f3;
+}
+
+.account strong,
+.account small {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.account strong {
+  font-size: 0.76rem;
+}
+
+.account small {
+  color: #aab8a9;
+  font-size: 0.72rem;
+}
+
+.sidebar-footer ion-button {
+  --color: #d8e0d5;
+  margin: 0;
+}
+
+.app-main {
+  width: 100%;
+  min-width: 0;
+  height: 100%;
+  background: #f5f7f4;
+}
+
+ion-router-outlet {
+  background: #f5f7f4;
+}
+
+@media (max-width: 991px) {
+  .sidebar-bottom {
+    position: static;
+    margin-top: auto;
+  }
+}
+
+.theme-toggle-wrap { padding: 0 .85rem .6rem; }
+.theme-toggle { width:100%; justify-content:flex-start; --color:#d8e0d5; font-size:.8rem; }
+.theme-toggle ion-icon { font-size:1.05rem; }

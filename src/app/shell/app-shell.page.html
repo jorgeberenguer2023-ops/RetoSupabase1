@@ -1,0 +1,59 @@
+<ion-split-pane contentId="main-content" when="lg">
+  <ion-menu contentId="main-content" type="overlay" aria-label="Navegación principal">
+    <ion-content class="sidebar">
+      <a class="brand" routerLink="/records" aria-label="Nexo, ir a comunidades">
+        <span class="brand-mark"><ion-icon name="cube-outline" aria-hidden="true"></ion-icon></span>
+        <span>Nexo<span class="brand-period">.</span></span>
+      </a>
+
+      <p class="nav-caption">ESPACIO DE TRABAJO</p>
+      <ion-list lines="none">
+        @if (auth.profile()?.role === 'admin') {
+          <ion-menu-toggle>
+            <ion-item routerLink="/dashboard" routerLinkActive="nav-active" [routerLinkActiveOptions]="{ exact: true }">
+              <ion-icon slot="start" name="grid-outline" aria-hidden="true"></ion-icon>
+              <ion-label>Resumen</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+        }
+        <ion-menu-toggle>
+          <ion-item routerLink="/records" routerLinkActive="nav-active">
+            <ion-icon slot="start" name="people-outline" aria-hidden="true"></ion-icon>
+            <ion-label>Comunidades</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+      </ion-list>
+
+      <div class="theme-toggle-wrap">
+        <ion-button fill="clear" class="theme-toggle" (click)="theme.toggle()" [attr.aria-label]="theme.dark() ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro'">
+          <ion-icon slot="start" [name]="theme.dark() ? 'sunny-outline' : 'moon-outline'"></ion-icon>
+          {{ theme.dark() ? 'Modo claro' : 'Modo oscuro' }}
+        </ion-button>
+      </div>
+
+      <div class="sidebar-bottom">
+        <div class="workspace-note">
+          <ion-icon name="shield-checkmark-outline" aria-hidden="true"></ion-icon>
+          <span><strong>Espacio seguro</strong><small>Conexión protegida</small></span>
+        </div>
+        @if (auth.authError() || signOutError()) {
+          <p class="sidebar-error" role="alert">{{ auth.authError() || signOutError() }}</p>
+        }
+        <div class="sidebar-footer">
+          <span class="avatar" aria-hidden="true">{{ auth.profile()?.full_name?.slice(0, 1) || 'U' }}</span>
+          <span class="account">
+            <strong>{{ auth.profile()?.full_name || auth.session()?.user?.email }}</strong>
+            <small>{{ auth.profile()?.role === 'admin' ? 'Administrador' : 'Usuario estándar' }}</small>
+          </span>
+          <ion-button fill="clear" aria-label="Cerrar sesión" (click)="signOut()">
+            <ion-icon slot="icon-only" name="log-out-outline" aria-hidden="true"></ion-icon>
+          </ion-button>
+        </div>
+      </div>
+    </ion-content>
+  </ion-menu>
+
+  <div class="app-main" id="main-content">
+    <ion-router-outlet></ion-router-outlet>
+  </div>
+</ion-split-pane>

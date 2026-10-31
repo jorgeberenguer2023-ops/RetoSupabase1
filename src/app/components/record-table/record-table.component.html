@@ -1,0 +1,89 @@
+<section class="table-card" aria-label="Listado de comunidades">
+  <div class="table-tools">
+    <ion-input
+      class="search-input"
+      type="search"
+      label="Buscar"
+      labelPlacement="stacked"
+      placeholder="Comunidad o correo"
+      [value]="searchTerm()"
+      (ionInput)="searchTerm.set($event.detail.value ?? '')"
+    >
+      <ion-icon slot="start" name="search-outline" aria-hidden="true"></ion-icon>
+    </ion-input>
+    <ion-select
+      class="status-select"
+      label="Cancelación"
+      labelPlacement="stacked"
+      [value]="cancellationFilter()"
+      (ionChange)="cancellationFilter.set($event.detail.value)"
+      interface="popover"
+    >
+      <ion-select-option value="all">Todos</ion-select-option>
+      <ion-select-option value="false">Activas</ion-select-option>
+      <ion-select-option value="true">Canceladas</ion-select-option>
+    </ion-select>
+  </div>
+
+  <div class="table-scroll">
+    <table>
+      <caption class="sr-only">Comunidades, cuotas mensuales y fechas de junta</caption>
+      <thead>
+        <tr>
+          <th scope="col">Comunidad</th>
+          <th scope="col">Número</th>
+          <th scope="col">Correo</th>
+          <th scope="col">Cuota mensual</th>
+          <th scope="col">Próxima junta</th>
+          <th scope="col">Estado</th>
+          @if (canManage) {
+            <th scope="col"><span class="sr-only">Acciones</span></th>
+          }
+        </tr>
+      </thead>
+      <tbody>
+        @for (community of filteredCommunities; track community.id) {
+          <tr>
+            <th scope="row">{{ community.comunidad }}</th>
+            <td>{{ community.numero }}</td>
+            <td>{{ community.email }}</td>
+            <td>{{ community.coste_mensual | currency: 'EUR' : 'symbol' : '1.2-2' : 'es-ES' }}</td>
+            <td>{{ community.junta | date: 'd MMM yyyy' : undefined : 'es-ES' }}</td>
+            <td>
+              <span [class]="community.cancelada ? 'status-pill status-pill--out' : 'status-pill status-pill--active'">
+                {{ community.cancelada ? 'Cancelada' : 'Activa' }}
+              </span>
+            </td>
+            @if (canManage) {
+              <td class="row-actions">
+                <ion-button
+                  fill="clear"
+                  size="small"
+                  [attr.aria-label]="'Editar comunidad ' + community.comunidad"
+                  (click)="edit.emit(community)"
+                >
+                  <ion-icon slot="icon-only" name="create-outline" aria-hidden="true"></ion-icon>
+                </ion-button>
+                <ion-button
+                  fill="clear"
+                  color="danger"
+                  size="small"
+                  [attr.aria-label]="'Eliminar comunidad ' + community.comunidad"
+                  (click)="remove.emit(community)"
+                >
+                  <ion-icon slot="icon-only" name="trash-outline" aria-hidden="true"></ion-icon>
+                </ion-button>
+              </td>
+            }
+          </tr>
+        } @empty {
+          <tr>
+            <td class="empty-state" [attr.colspan]="canManage ? 7 : 6">
+              No hay comunidades que coincidan con la búsqueda.
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</section>
